@@ -81,34 +81,42 @@ const CryptoList = state => (
     )
 );
 
+const CryptoSearch = setState => (
+    h('input', 
+        { 
+            className: 'crypto-search', 
+            type: 'search', 
+            placeholder: 'Search By Name, Symbol',
+            oninput: e => setState(state => ({ ...state, search: e.target.value.trim().toLowerCase() }))
+        }
+    )
+);
+
+const CryptoSortBar = (state, setState) => (
+    h('div', { className: 'sort-btn-container' },
+        h('button', 
+            { 
+                className: 'btn sort-btn',
+                onclick: () => setState(state => ({ ...state, mkt_desc: !state.mkt_desc })) 
+            }, 
+            text('Market Cap '),
+            text(state.mkt_desc ? '↑' : '↓')
+        ),
+        h('button', 
+            { 
+                className: 'btn sort-btn',
+                onclick: () => setState(state => ({ ...state, price_desc: !state.price_desc })) 
+            }, 
+            text('Price '),
+            text(state.price_desc ? '↑' : '↓')
+        )
+    )
+);
+
 const CryptoMain = (state, setState) => (
     h('div', { className: 'crypto-container' },
-        h('input', 
-            { 
-                className: 'crypto-search', 
-                type: 'search', 
-                placeholder: 'Search By Name, Symbol',
-                oninput: e => setState(state => ({ ...state, search: e.target.value.trim().toLowerCase() }))
-            }
-        ),
-        h('div', { className: 'sort-btn-container' },
-            h('button', 
-                { 
-                    className: 'btn sort-btn',
-                    onclick: () => setState(state => ({ ...state, mkt_desc: !state.mkt_desc })) 
-                }, 
-                text('Market Cap '),
-                text(state.mkt_desc ? '↑' : '↓')
-            ),
-            h('button', 
-                { 
-                    className: 'btn sort-btn',
-                    onclick: () => setState(state => ({ ...state, price_desc: !state.price_desc })) 
-                }, 
-                text('Price '),
-                text(state.price_desc ? '↑' : '↓')
-            )
-        ),
+        CryptoSearch(setState),
+        CryptoSortBar(state, setState),
         CryptoList(state)
     )
 );
