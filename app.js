@@ -137,18 +137,16 @@ runApp({
     subscriptions: state => [
         fetchData
     ],
-    view: (state, setState) => {
-        return (
-            h('div', { className: 'app-container' },
-                h('div', { className: 'app-header' },
-                    h('h1', { className: 'title' }, text('CryptoPriceTracker'))
-                ),
-                h('div', { className: 'app-main' },
-                    state.loading
-                        ? h('p', {}, text('Loading...'))
-                        : CryptoMain(state, setState)
-                )
+    view: (state, setState) => (
+        h('div', { className: 'app-container' },
+            h('div', { className: 'app-header' },
+                h('h1', { className: 'title' }, text('CryptoPriceTracker'))
+            ),
+            h('div', { className: 'app-main' },
+                state.loading
+                    ? h('p', {}, text('Loading...'))
+                    : CryptoMain(state, setState)
             )
         )
-    }
+    )
 })
